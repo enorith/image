@@ -20,6 +20,7 @@ type Style struct {
 	Width           float64
 	Align           gg.Align
 	LineSpacing     float64
+	BorderRadius    float64
 }
 
 type BaseElement struct {

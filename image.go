@@ -2,6 +2,7 @@ package image
 
 import (
 	"github.com/fogleman/gg"
+	"github.com/sirupsen/logrus"
 	"image/color"
 )
 
@@ -9,9 +10,10 @@ var DefaultColor = color.Black
 var DefaultBackgroundColor = color.White
 var DefaultFontSize float64 = 16
 var DefaultLineSpacing float64 = 2
+var DefaultFont = "NotoSerifCJKsc-Regular.otf"
 
 type Element interface {
-	Draw(ctx *gg.Context)
+	Draw(ctx *gg.Context) error
 }
 
 type Canvas struct {
@@ -33,7 +35,10 @@ func (c *Canvas) Draw() *Canvas {
 	c.SetColor(c.backgroundColor)
 	c.Clear()
 	for _, e := range c.elements {
-		e.Draw(c.Context)
+		err := e.Draw(c.Context)
+		if err != nil {
+			logrus.Error(err)
+		}
 	}
 	c.draw = true
 	return c
