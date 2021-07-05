@@ -9,18 +9,20 @@ import (
 
 func TestDraw(t *testing.T) {
 	e := image.NewCanvas(512, 512, elements.Text{
-		Content: "hello world 中午啊哈哈5456awdaw单位 为31 啊伟大伟大",
+		Content: "hello world 中午啊哈哈5456awdaw单位 为31 啊伟大伟大, 垃圾达瓦达瓦达瓦阿瓦达 啊",
 		Style: elements.Style{
-			Top: 10,
+			Top:   320,
+			Left:  12,
+			Width: 488,
 		},
 		Wrapped: true,
 	}, elements.Image{
-		Src: "assets/gopher.png",
+		Src: "https://picsum.photos/488/300",
 		Style: elements.Style{
-			Top:          100,
-			BorderRadius: 24,
+			Top:          12,
+			BorderRadius: 12,
+			Left:         12,
 		},
-		Width: 256,
 	}).SavePNG("out.png")
 	t.Error(e)
 }

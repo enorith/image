@@ -9,7 +9,7 @@ import (
 var DefaultColor = color.Black
 var DefaultBackgroundColor = color.White
 var DefaultFontSize float64 = 16
-var DefaultLineSpacing float64 = 2
+var DefaultLineSpacing float64 = 1
 var DefaultFont = "NotoSerifCJKsc-Regular.otf"
 
 type Element interface {
