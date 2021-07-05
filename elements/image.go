@@ -6,7 +6,6 @@ import (
 	"github.com/fogleman/gg"
 	"github.com/sirupsen/logrus"
 	"image"
-	"image/color"
 	"strings"
 )
 
@@ -57,7 +56,6 @@ func (i Image) Draw(ctx *gg.Context) error {
 			w = i.Width
 		}
 	}
-	ctx.SetColor(color.Black)
 	if i.BorderRadius != 0 {
 		ctx.DrawRoundedRectangle(i.Left, i.Top, float64(w), float64(h), i.BorderRadius)
 		ctx.Clip()
