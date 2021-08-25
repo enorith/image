@@ -1,12 +1,13 @@
 package elements
 
 import (
+	"image"
+	"strings"
+
 	"github.com/disintegration/imaging"
 	"github.com/enorith/feather"
 	"github.com/fogleman/gg"
 	"github.com/sirupsen/logrus"
-	"image"
-	"strings"
 )
 
 type Image struct {
@@ -26,7 +27,9 @@ func (i Image) Draw(ctx *gg.Context) error {
 			return e
 		}
 		im, _, e = image.Decode(res.Wait().Body)
-
+		if e != nil {
+			return e
+		}
 	} else {
 		im, e = gg.LoadImage(i.Src)
 		if e != nil {
@@ -60,7 +63,7 @@ func (i Image) Draw(ctx *gg.Context) error {
 		ctx.DrawRoundedRectangle(i.Left, i.Top, float64(w), float64(h), i.BorderRadius)
 		ctx.Clip()
 	}
-	ctx.DrawImage(im, int(i.Left), int(i.Top))
+	ctx.DrawImageAnchored(im, int(i.Left), int(i.Top), i.Anchor[0], i.Anchor[1])
 
 	return nil
 }

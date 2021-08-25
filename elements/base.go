@@ -1,12 +1,14 @@
 package elements
 
 import (
+	"image/color"
+
 	"github.com/fogleman/gg"
 	"golang.org/x/image/font"
-	"image/color"
 )
 
 type Anchor [2]float64
+type Box [2]int
 
 type Style struct {
 	Color           color.Color
@@ -21,8 +23,5 @@ type Style struct {
 	Align           gg.Align
 	LineSpacing     float64
 	BorderRadius    float64
-}
-
-type BaseElement struct {
-	color color.Color
+	Box             Box
 }

@@ -1,30 +1,34 @@
 package image_test
 
 import (
+	"testing"
+
 	"github.com/enorith/image"
 	"github.com/enorith/image/assets"
 	"github.com/enorith/image/elements"
-	"testing"
 )
 
 func TestDraw(t *testing.T) {
 	e := image.NewCanvas(512, 512, elements.Text{
-		Content: "hello world 中午啊哈哈5456awdaw单位 为31 啊伟大伟大, 垃圾达瓦达瓦达瓦阿瓦达 啊",
+		Content: "hello world 你好，中文文字，滚滚长江东逝水，浪花淘尽英雄。是非成败转头空：青山依旧在，几度夕阳红。白发渔樵江渚上，惯看秋月春风。一壶浊酒喜相逢：古今多少事，都付笑谈中。话说天下大势，分久必合，合久必分：周末七国分争，并入于秦。",
 		Style: elements.Style{
-			Top:   320,
-			Left:  12,
-			Width: 488,
+			Top:         320,
+			Left:        12,
+			Width:       488,
+			LineSpacing: 1,
 		},
 		Wrapped: true,
 	}, elements.Image{
-		Src: "https://picsum.photos/488/300",
+		Src: "https://picsum.photos/600/300",
 		Style: elements.Style{
 			Top:          12,
 			BorderRadius: 12,
 			Left:         12,
 		},
 	}).SavePNG("out.png")
-	t.Error(e)
+	if e != nil {
+		t.Error(e)
+	}
 }
 
 func TestReadFile(t *testing.T) {

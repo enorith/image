@@ -1,9 +1,10 @@
 package image
 
 import (
+	"image/color"
+
 	"github.com/fogleman/gg"
 	"github.com/sirupsen/logrus"
-	"image/color"
 )
 
 var DefaultColor = color.Black
@@ -28,9 +29,9 @@ func (c *Canvas) SetBackgroundColor(color color.Color) *Canvas {
 	return c
 }
 
-func (c *Canvas) Draw() *Canvas {
-	if c.draw == true {
-		return c
+func (c *Canvas) Draw() (*Canvas, error) {
+	if c.draw {
+		return c, nil
 	}
 	c.SetColor(c.backgroundColor)
 	c.Clear()
@@ -38,15 +39,19 @@ func (c *Canvas) Draw() *Canvas {
 		err := e.Draw(c.Context)
 		if err != nil {
 			logrus.Error(err)
+			return c, err
 		}
 	}
 	c.draw = true
-	return c
+	return c, nil
 }
 
 // SavePNG encodes the image as a PNG and writes it to disk.
 func (c *Canvas) SavePNG(path string) error {
-	c.Draw()
+	_, e := c.Draw()
+	if e != nil {
+		return e
+	}
 	return c.Context.SavePNG(path)
 }
 
