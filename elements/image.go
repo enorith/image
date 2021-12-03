@@ -58,9 +58,9 @@ func (i Image) Draw(ctx *gg.Context) error {
 	w, h := bounds.Dx(), bounds.Dy()
 	if i.Limit != 0 && i.Width == 0 && i.Height == 0 {
 		if w > h {
-			i.Height = i.Limit
-		} else {
 			i.Width = i.Limit
+		} else {
+			i.Height = i.Limit
 		}
 	}
 
