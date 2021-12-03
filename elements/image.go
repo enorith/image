@@ -15,6 +15,7 @@ type Image struct {
 	Style
 	Src    string
 	Reader io.Reader
+	Img    image.Image
 	Width  int
 	Height int
 	Limit  int
@@ -23,28 +24,32 @@ type Image struct {
 func (i Image) Draw(ctx *gg.Context) error {
 	var im image.Image
 	var e error
-	if i.Reader != nil {
-		im, _, e = image.Decode(i.Reader)
-		if e != nil {
-			logrus.Error("load image error ", e)
-			return e
-		}
+	if i.Img != nil {
+		im = i.Img
 	} else {
-		if strings.HasPrefix(i.Src, "http") {
-			res, e := feather.Get(i.Src)
+		if i.Reader != nil {
+			im, _, e = image.Decode(i.Reader)
 			if e != nil {
 				logrus.Error("load image error ", e)
-				return e
-			}
-			im, _, e = image.Decode(res.Wait().Body)
-			if e != nil {
 				return e
 			}
 		} else {
-			im, e = gg.LoadImage(i.Src)
-			if e != nil {
-				logrus.Error("load image error ", e)
-				return e
+			if strings.HasPrefix(i.Src, "http") {
+				res, e := feather.Get(i.Src)
+				if e != nil {
+					logrus.Error("load image error ", e)
+					return e
+				}
+				im, _, e = image.Decode(res.Wait().Body)
+				if e != nil {
+					return e
+				}
+			} else {
+				im, e = gg.LoadImage(i.Src)
+				if e != nil {
+					logrus.Error("load image error ", e)
+					return e
+				}
 			}
 		}
 	}
