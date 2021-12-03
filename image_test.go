@@ -31,6 +31,18 @@ func TestDraw(t *testing.T) {
 	}
 }
 
+func TestLimit(t *testing.T) {
+	w := 100
+
+	e := image.NewCanvas(200, 200, elements.Image{
+		Src:   "https://picsum.photos/600/300",
+		Limit: w,
+	}).SavePNG("out_limit.png")
+	if e != nil {
+		t.Error(e)
+	}
+}
+
 func TestReadFile(t *testing.T) {
 	b, e := assets.ReadFile("fonts/NotoSerifCJKsc-Regular.otf")
 	if e != nil {
